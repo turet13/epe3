@@ -11,10 +11,9 @@ using MySql.Data.MySqlClient;
 [ApiController]
 public class PacienteController : ControllerBase
 {
-    // Cadena de conexión a la base de datos
+    // Cadena de conexión
     private readonly string _connectionString;
 
-    // Constructor del controlador que recibe la configuración (por inyección de dependencias)
     public PacienteController(IConfiguration config)
     {
         _connectionString = config.GetConnectionString("MySqlConnection");
@@ -85,7 +84,10 @@ public class PacienteController : ControllerBase
             {
                 await connection.OpenAsync();
 
-                // Consulta SQL para obtener un médico por su ID
+                
+
+
+
                 string Consulta = "SELECT * FROM Paciente WHERE id_Paciente = @id";
 
                 
@@ -103,6 +105,9 @@ public class PacienteController : ControllerBase
                         if (await Lector.ReadAsync())
                         {
                            
+
+
+
                             paciente.id_Paciente = Lector.GetInt32(0);
                             paciente.NombrePac = Lector.GetString(1);
                             paciente.ApellidoPac = Lector.GetString(2);
@@ -148,6 +153,9 @@ public class PacienteController : ControllerBase
                 string Consulta = "INSERT INTO Paciente (NombrePac, ApellidoPac, RunPac, Nacionalidad, Visa, genero, SintomasPac, Medico_idMedico) VALUES (@NombrePac, @ApellidoPac, @RunPac, @Nacionalidad, @visa, @genero, @SintomasPac, @Medico_idMedico)";
 
                 
+
+
+
                 using (MySqlCommand command = new MySqlCommand(Consulta, connection))
                 {
                     
@@ -185,6 +193,8 @@ public class PacienteController : ControllerBase
             using (MySqlConnection connection = new MySqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
+
+
 
                 // Consulta
                 string consulta = "UPDATE Paciente SET NombrePac = @NombrePac, ApellidoPac= @ApellidoPac, RunPac = @RunPac, Nacionalidad = @Nacionalidad, Visa = @Visa, genero = @genero, SintomasPac = @SintomasPac, Medico_idMedico = @Medico_idMedico WHERE idPaciente = @id";
@@ -237,19 +247,23 @@ public class PacienteController : ControllerBase
             {
                 await connection.OpenAsync();
 
-                // Consulta SQL para eliminar un médico por su ID
+                // Consulta sql
+
                 string Consulta = "DELETE FROM Medico WHERE idMedico = @id";
 
-                // Uso de "using" para garantizar la liberación de recursos
+       
+
+
                 using (MySqlCommand command = new MySqlCommand(Consulta, connection))
                 {
-                    // Asignación de parámetros
+            
                     command.Parameters.AddWithValue("@id", id);
 
-                    // Ejecución de la consulta de eliminación
+                  
                     var ELim = await command.ExecuteNonQueryAsync();
 
-                    // Verificación de si se eliminó algún registro
+                    // Verificación
+                    
                     if (ELim == 0)
                     {
                         // error 404

@@ -11,7 +11,7 @@ using MySql.Data.MySqlClient;
 [ApiController]
 public class ReservaController : ControllerBase
 {
-    // Cadena de conexión a la base de datos
+    // Cadena de conexión
     private readonly string _connectionString;
 
   
@@ -76,7 +76,7 @@ public class ReservaController : ControllerBase
     {
         try
         {
-            // Uso de "using" para garantizar la liberación de recursos
+            
             using (MySqlConnection connection = new MySqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
@@ -161,19 +161,19 @@ public class ReservaController : ControllerBase
             {
                 await connection.OpenAsync();
 
-                // Consulta SQL para eliminar un médico por su ID
+               
                 string Consulta = "DELETE FROM Reserva WHERE idReserva = @id";
 
-                // Uso de "using" para garantizar la liberación de recursos
+              
                 using (MySqlCommand command = new MySqlCommand(Consulta, connection))
                 {
-                    // Asignación de parámetros
+                    
                     command.Parameters.AddWithValue("@id", id);
 
-                    // Ejecución de la consulta de eliminación
+                    
                     var ELim = await command.ExecuteNonQueryAsync();
 
-                    // Verificación de si se eliminó algún registro
+                    
                     if (ELim == 0)
                     {
                         // error 404

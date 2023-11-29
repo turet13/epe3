@@ -39,7 +39,7 @@ public class MedicoController : ControllerBase
 
                 List<Medico> medicos = new List<Medico>();
 
-                // Uso de "using" para garantizar la liberación de recursos
+                
                 using (MySqlCommand command = new MySqlCommand(query, connection))
                 using (var Lector = await command.ExecuteReaderAsync())
                 {
@@ -83,7 +83,7 @@ public class MedicoController : ControllerBase
             {
                 await connection.OpenAsync();
 
-                // Consulta SQL para obtener un médico por su ID
+                // Consulta sql por id
                 string Consulta = "SELECT * FROM Medico WHERE idMedico = @id";
 
                 
@@ -137,7 +137,7 @@ public class MedicoController : ControllerBase
     {
         try
         {
-            // Uso de "using" para garantizar la liberación de recursos
+          
             using (MySqlConnection connection = new MySqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
@@ -241,18 +241,20 @@ public class MedicoController : ControllerBase
                
                 using (MySqlCommand command = new MySqlCommand(Consulta, connection))
                 {
-                    // Asignación de parámetros
+                    // Asignacion
                     command.Parameters.AddWithValue("@id", id);
 
-                    // Ejecución de la consulta de eliminación
+                  
                     var ELim = await command.ExecuteNonQueryAsync();
 
-                    // Verificación de si se eliminó algún registro
+                    // Verificacion
+
                     if (ELim == 0)
                     {
                         // error 404
                         return StatusCode(404, "Registro no encontrado con exito");
                     }
+
 
                     else
                     {
